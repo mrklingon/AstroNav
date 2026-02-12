@@ -2,6 +2,7 @@ from microbit import *
 import random
 import time
 D=40
+FULL = D*D
 
 def mkUni(diam):
     for i in range(3):
@@ -21,7 +22,7 @@ def mkUni(diam):
 def show(x,y,uni):
     for yy in range(5):
         for xx in range(5):
-            display.set_pixel(xx,yy,uni[xx+x+y*D+yy])
+            display.set_pixel(xx,yy,uni[(FULL+xx+x+y*D+yy)%FULL])
 
 x = 0
 y = 0
@@ -38,20 +39,20 @@ while True:
     if accelerometer.was_gesture("left"):
         x = x - 1
         if x<0:
-            x=0
+            x=D
         show(x,y,cosmos)
     if accelerometer.was_gesture("right"):
         x = x + 1
-        if x>D-4:
-            x=D-4
+        if x>=D:
+            x=0
         show(x,y,cosmos)
     if accelerometer.was_gesture("up"):
         y = y - 1
         if y<0:
-            y=0
+            y=D
         show(x,y,cosmos)
     if accelerometer.was_gesture("down"):
         y = y + 1
-        if y>D-4:
-            y=D-4
+        if y>=D:
+            y=0
         show(x,y,cosmos)
