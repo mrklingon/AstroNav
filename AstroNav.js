@@ -15,17 +15,17 @@ function Show_XY (xx: number, yy: number) {
 input.onGesture(Gesture.LogoUp, function () {
     Y += -1
     if (Y < 0) {
-        Y = 0
+        Y = D
     }
     Show_XY(X, Y)
 })
 function Find_Spot (Xl: number, Yl: number) {
-    return Uni[Xl + Yl * D]
+    return Uni[(Xl + Yl * D + 0) % Full]
 }
 input.onGesture(Gesture.TiltLeft, function () {
     X += -1
     if (X < 0) {
-        X = 0
+        X = D
     }
     Show_XY(X, Y)
 })
@@ -73,15 +73,15 @@ function flash () {
 }
 input.onGesture(Gesture.TiltRight, function () {
     X += 1
-    if (X > D - 4) {
-        X = D - 4
+    if (X > 4) {
+        X = D - 0
     }
     Show_XY(X, Y)
 })
 input.onGesture(Gesture.LogoDown, function () {
     Y += 1
-    if (Y > D - 4) {
-        Y = D - 4
+    if (Y > D) {
+        Y = 0
     }
     Show_XY(X, Y)
 })
@@ -102,8 +102,10 @@ input.onLogoEvent(TouchButtonEvent.Pressed, function () {
 let Uni: number[] = []
 let X = 0
 let Y = 0
+let Full = 0
 let D = 0
 D = 20
+Full = D * D
 BuildUni(D)
 Y = 0
 X = 0
